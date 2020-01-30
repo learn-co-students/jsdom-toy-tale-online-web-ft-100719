@@ -1,37 +1,26 @@
 
-let addToy = false
-
-document.addEventListener("DOMContentLoaded", ()=>{
+document.addEventListener('DOMContentLoaded', (event) => {
   const addBtn = document.querySelector('#new-toy-btn')
   const toyForm = document.querySelector('.container')
+  let addToy = false
+  
   
   // add listener to 'Add Toy' button to show or hide form
-  addBtn.addEventListener('click', () => {
-    // hide & seek with the form
-    addToy = !addToy
-    if (addToy) {
-      toyForm.style.display = 'block'
-      toyForm.addEventListener('submit', event => {
-        event.preventDefault()
-        postToy(event.target)
-      })
-    } else {
-      toyForm.style.display = 'none'
-    }
-  })
-  
-  // start by getting all toys
-  
-  getToys().then(toys => {
-    toys.forEach(toy => {
-      //function to render toys goes here or something
-      renderToys(toy)
+addBtn.addEventListener('click', () => {
+  // hide & seek with the form
+  addToy = !addToy
+  if (addToy) {
+    toyForm.style.display = 'block'
+    toyForm.addEventListener('submit', event => {
+      event.preventDefault()
+      postToy(event.target)
     })
-  })
-  
-
-let divCollect = document.querySelector('#toy-collection')
-
+  } else {
+    toyForm.style.display = 'none'
+  }
+})
+  console.log('DOM fully loaded and parsed');
+});
 
 function getToys() {
   return fetch('http://localhost:3000/toys')
@@ -54,6 +43,7 @@ function postToy(toy_data) {
     })
     .then(res => res.json())
     .then((obj_toy) => {
+      let divCollect = document.querySelector('#toy-collection')
       let new_toy = renderToys(obj_toy)
       divCollect.append(new_toy)
     })
@@ -81,6 +71,7 @@ function likes(e) {
 }
 
 function renderToys(toy) {
+  let divCollect = document.querySelector('#toy-collection')
   let h2 = document.createElement('h2')
   h2.innerText = toy.name
 
@@ -105,3 +96,15 @@ function renderToys(toy) {
   divCard.append(h2, img, p, btn)
   divCollect.append(divCard)
 }
+
+
+
+
+// start by getting all toys
+
+getToys().then(toys => {
+  toys.forEach(toy => {
+    //function to render toys goes here or something
+    renderToys(toy)
+  })
+})
