@@ -70,7 +70,7 @@ function addLikes(toy){
       "image": imageUrl,
       "likes": "0"
     }
-
+    
     let config = {
       method: "POST",
       headers: {
@@ -82,20 +82,52 @@ function addLikes(toy){
 
     fetch("http://localhost:3000/toys", config)
       .then(resp => resp.json())
-      .then(obj => {
-        console.log(obj)
+      .then(toy => {
+        let toyCollection = document.getElementById("toy-collection")
+        let toyDiv = document.createElement("div")
+          toyDiv.classList.add("card")
+          toyDiv.id = toy["name"]
+        let heading = document.createElement("h2")
+          toyDiv.appendChild(heading)
+          heading.innerText = toy["name"]
+        let image = document.createElement("img")
+          image.classList.add("toy-avatar")
+          image.src = `${toy["image"]}`
+          toyDiv.appendChild(image)
+        let likes = document.createElement("p")
+          likes.innerText = toy["likes"]
+          toyDiv.appendChild(likes)
+        let likeButton = document.createElement("button")
+          likeButton.innerText = "Like"
+          likeButton.classList.add("like-btn")
+          likeButton.setAttribute("href", `http://localhost:3000/toys/${toy["id"]}`)
+          // listen for clicks on like button etc 
+          likeButton.addEventListener("click", () => {
+            let toyUrl = likeButton.attributes["href"].value
+            let toyLikes = likes.innerText  
+            updateLikes(toyUrl, toyLikes)
+          })
+          toyDiv.appendChild(likeButton)
+          toyCollection.appendChild(toyDiv)
       })
-      .catch(error => alert(error.message))
+      .catch((err, blah) => {
+        alert(err)
+        alert(blah)
+      })
   }
 
   // this method listens for toy submission clicks and handles submission
   function createNewToys() {
     let newToyForm = document.getElementsByClassName("add-toy-form")[0]
     let submit = newToyForm.getElementsByClassName("submit")[0]
-    submit.addEventListener("click", () => {
+    submit.addEventListener("click", (event) => {
       let toyName = newToyForm.children["name"].value
       let imageUrl = newToyForm.children["image"].value
       addNewToy(toyName,imageUrl)
+      newToyForm.children["name"].value = ""
+      imageUrl = newToyForm.children["image"].value = ""
+      event.preventDefault()
+      // submit onclick currently returning fetch failure? 
     })
   }
 
