@@ -30,14 +30,15 @@ function renderToys(toys){
     likeButton.addEventListener("click", () => {
       let toyUrl = likeButton.attributes["href"].value
       let toyLikes = likes.innerText  
-      addLikes(toyUrl, toyLikes)
+      updateLikes(toyUrl, toyLikes)
     })
     toyDiv.appendChild(likeButton)
     toyCollection.appendChild(toyDiv)
   }
 }
 
-function addLikes(toyURL, toyLikes){
+// Methods to add likes to toys 
+function updateLikes(toyURL, toyLikes){
   fetch(toyURL, {
     method: "PATCH",
     headers: 
@@ -50,18 +51,60 @@ function addLikes(toyURL, toyLikes){
     })
   }) 
   .then(resp => resp.json())
-  .then(obj => updateLikes(obj))
+  .then(obj => addLikes(obj))
 }
 
-function updateLikes(toy){
+function addLikes(toy){
   let toyDiv = document.getElementById(toy["name"])
   let likes = toyDiv.getElementsByTagName("p")
   likes[0].innerText = toy["likes"] 
 }
 
+//Methods to add a new toys
+
+  function addNewToy(name,imageUrl){
+
+    let formData = {
+      "name": name,
+      "image": imageUrl,
+      "likes": "0"
+    }
+
+    let config = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(formData)
+    }
+
+    fetch("http://localhost:3000/toys", config)
+      .then(resp => resp.json())
+      .then(obj => {
+        let toyCollection = document.getElementById("toy-collection")
+        let p = document.createElement("p")
+        p.innerText = obj 
+        toyCollection.appendChild(p)
+      })
+      .catch(error => alert(error.message))
+  }
+
+  function createNewToys() {
+    let newToyForm = document.getElementsByClassName("add-toy-form")[0]
+    let submit = newToyForm.getElementsByClassName("submit")[0]
+    submit.addEventListener("click", () => {
+      let toyName = newToyForm.children["name"].value
+      let imageUrl = newToyForm.children["image"].value
+      addNewToy(toyName,imageUrl)
+    })
+  }
+
+
 document.addEventListener("DOMContentLoaded", ()=>{
 
   getToys();
+  createNewToys();
 
   const addBtn = document.querySelector('#new-toy-btn')
   const toyForm = document.querySelector('.container')
