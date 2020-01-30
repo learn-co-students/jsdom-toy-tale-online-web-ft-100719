@@ -8,34 +8,38 @@ function getToys(){
 }
 
 function renderToys(toys){
-  let toyCollection = document.getElementById("toy-collection")
   for(toy of toys){
-    let toyDiv = document.createElement("div")
-      toyDiv.classList.add("card")
-      toyDiv.id = toy["name"]
-    let heading = document.createElement("h2")
-      toyDiv.appendChild(heading)
-      heading.innerText = toy["name"]
-    let image = document.createElement("img")
-      image.classList.add("toy-avatar")
-      image.src = `${toy["image"]}`
-      toyDiv.appendChild(image)
-    let likes = document.createElement("p")
-      likes.innerText = toy["likes"]
-      toyDiv.appendChild(likes)
-    let likeButton = document.createElement("button")
-      likeButton.innerText = "Like"
-      likeButton.classList.add("like-btn")
-      likeButton.setAttribute("href", `http://localhost:3000/toys/${toy["id"]}`)
-      // listen for clicks on like button etc 
-      likeButton.addEventListener("click", () => {
-        let toyUrl = likeButton.attributes["href"].value
-        let toyLikes = likes.innerText  
-        updateLikes(toyUrl, toyLikes)
-      })
-      toyDiv.appendChild(likeButton)
-      toyCollection.appendChild(toyDiv)
+    toyCreation(toy)
   }
+}
+
+function toyCreation(toy){
+  let toyCollection = document.getElementById("toy-collection")
+  let toyDiv = document.createElement("div")
+          toyDiv.classList.add("card")
+          toyDiv.id = toy["name"]
+        let heading = document.createElement("h2")
+          toyDiv.appendChild(heading)
+          heading.innerText = toy["name"]
+        let image = document.createElement("img")
+          image.classList.add("toy-avatar")
+          image.src = `${toy["image"]}`
+          toyDiv.appendChild(image)
+        let likes = document.createElement("p")
+          likes.innerText = toy["likes"]
+          toyDiv.appendChild(likes)
+        let likeButton = document.createElement("button")
+          likeButton.innerText = "Like"
+          likeButton.classList.add("like-btn")
+          likeButton.setAttribute("href", `http://localhost:3000/toys/${toy["id"]}`)
+          // listen for clicks on like button etc 
+          likeButton.addEventListener("click", () => {
+            let toyUrl = likeButton.attributes["href"].value
+            let toyLikes = likes.innerText  
+            updateLikes(toyUrl, toyLikes)
+          })
+          toyDiv.appendChild(likeButton)
+          toyCollection.appendChild(toyDiv)
 }
 
 // Methods to add likes to toys 
@@ -83,32 +87,7 @@ function addLikes(toy){
     fetch("http://localhost:3000/toys", config)
       .then(resp => resp.json())
       .then(toy => {
-        let toyCollection = document.getElementById("toy-collection")
-        let toyDiv = document.createElement("div")
-          toyDiv.classList.add("card")
-          toyDiv.id = toy["name"]
-        let heading = document.createElement("h2")
-          toyDiv.appendChild(heading)
-          heading.innerText = toy["name"]
-        let image = document.createElement("img")
-          image.classList.add("toy-avatar")
-          image.src = `${toy["image"]}`
-          toyDiv.appendChild(image)
-        let likes = document.createElement("p")
-          likes.innerText = toy["likes"]
-          toyDiv.appendChild(likes)
-        let likeButton = document.createElement("button")
-          likeButton.innerText = "Like"
-          likeButton.classList.add("like-btn")
-          likeButton.setAttribute("href", `http://localhost:3000/toys/${toy["id"]}`)
-          // listen for clicks on like button etc 
-          likeButton.addEventListener("click", () => {
-            let toyUrl = likeButton.attributes["href"].value
-            let toyLikes = likes.innerText  
-            updateLikes(toyUrl, toyLikes)
-          })
-          toyDiv.appendChild(likeButton)
-          toyCollection.appendChild(toyDiv)
+        toyCreation(toy)
       })
       .catch((err, blah) => {
         alert(err)
