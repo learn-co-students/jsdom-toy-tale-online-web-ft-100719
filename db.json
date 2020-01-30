@@ -16,7 +16,7 @@
       "id": 3,
       "name": "Mr. Potato Head",
       "image": "https://vignette.wikia.nocookie.net/universe-of-smash-bros-lawl/images/d/d8/Mr-potato-head-toy-story.gif/revision/latest?cb=20151129131217",
-      "likes": "4"
+      "likes": "5"
     },
     {
       "id": 4,
@@ -47,6 +47,12 @@
       "name": "Little Green Men",
       "image": "http://www.pngmart.com/files/3/Toy-Story-Alien-PNG-File.png",
       "likes": "1"
+    },
+    {
+      "name": "Barbie",
+      "image": "https://ae01.alicdn.com/kf/HTB1FunZc.EIL1JjSZFFq6A5kVXaM/Barbie-Doll-Limited-Collector-s-Edition-Classic-Black-And-White-Swimwear-Black-Label-Barbie-Girl-Toys.jpg",
+      "likes": "1",
+      "id": 9
     }
   ]
 }

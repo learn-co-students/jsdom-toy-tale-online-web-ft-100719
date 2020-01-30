@@ -11,29 +11,30 @@ function renderToys(toys){
   let toyCollection = document.getElementById("toy-collection")
   for(toy of toys){
     let toyDiv = document.createElement("div")
-    toyDiv.classList.add("card")
-    toyDiv.id = toy["name"]
+      toyDiv.classList.add("card")
+      toyDiv.id = toy["name"]
     let heading = document.createElement("h2")
-    toyDiv.appendChild(heading)
-    heading.innerText = toy["name"]
+      toyDiv.appendChild(heading)
+      heading.innerText = toy["name"]
     let image = document.createElement("img")
-    image.classList.add("toy-avatar")
-    image.src = `${toy["image"]}`
-    toyDiv.appendChild(image)
+      image.classList.add("toy-avatar")
+      image.src = `${toy["image"]}`
+      toyDiv.appendChild(image)
     let likes = document.createElement("p")
-    likes.innerText = toy["likes"]
-    toyDiv.appendChild(likes)
+      likes.innerText = toy["likes"]
+      toyDiv.appendChild(likes)
     let likeButton = document.createElement("button")
-    likeButton.innerText = "Like"
-    likeButton.classList.add("like-btn")
-    likeButton.setAttribute("href", `http://localhost:3000/toys/${toy["id"]}`)
-    likeButton.addEventListener("click", () => {
-      let toyUrl = likeButton.attributes["href"].value
-      let toyLikes = likes.innerText  
-      updateLikes(toyUrl, toyLikes)
-    })
-    toyDiv.appendChild(likeButton)
-    toyCollection.appendChild(toyDiv)
+      likeButton.innerText = "Like"
+      likeButton.classList.add("like-btn")
+      likeButton.setAttribute("href", `http://localhost:3000/toys/${toy["id"]}`)
+      // listen for clicks on like button etc 
+      likeButton.addEventListener("click", () => {
+        let toyUrl = likeButton.attributes["href"].value
+        let toyLikes = likes.innerText  
+        updateLikes(toyUrl, toyLikes)
+      })
+      toyDiv.appendChild(likeButton)
+      toyCollection.appendChild(toyDiv)
   }
 }
 
@@ -82,14 +83,12 @@ function addLikes(toy){
     fetch("http://localhost:3000/toys", config)
       .then(resp => resp.json())
       .then(obj => {
-        let toyCollection = document.getElementById("toy-collection")
-        let p = document.createElement("p")
-        p.innerText = obj 
-        toyCollection.appendChild(p)
+        console.log(obj)
       })
       .catch(error => alert(error.message))
   }
 
+  // this method listens for toy submission clicks and handles submission
   function createNewToys() {
     let newToyForm = document.getElementsByClassName("add-toy-form")[0]
     let submit = newToyForm.getElementsByClassName("submit")[0]
