@@ -47,6 +47,36 @@
       "name": "Little Green Men",
       "image": "http://www.pngmart.com/files/3/Toy-Story-Alien-PNG-File.png",
       "likes": -2
+    },
+    {
+      "name": "Pikachu",
+      "image": "https://cdn.shopify.com/s/files/1/0217/6358/8196/products/325457.06-1_1296x.jpg?v=1571721107",
+      "likes": 0,
+      "id": 9
+    },
+    {
+      "name": "Pikachu",
+      "image": "https://cdn.shopify.com/s/files/1/0217/6358/8196/products/325457.06-1_1296x.jpg?v=1571721107",
+      "likes": 0,
+      "id": 10
+    },
+    {
+      "name": "pikachu 10",
+      "image": "https://cdn.shopify.com/s/files/1/0217/6358/8196/products/325457.06-1_1296x.jpg?v=1571721107",
+      "likes": 0,
+      "id": 11
+    },
+    {
+      "name": "pikachu 50",
+      "image": "https://cdn.shopify.com/s/files/1/0217/6358/8196/products/325457.06-1_1296x.jpg?v=1571721107",
+      "likes": 0,
+      "id": 12
+    },
+    {
+      "name": "Mermaid",
+      "image": "https://cdn.shopify.com/s/files/1/0030/8376/3824/products/1_skye.jpg?v=1541603111",
+      "likes": 0,
+      "id": 13
     }
   ]
 }
