@@ -9,13 +9,17 @@ document.addEventListener("DOMContentLoaded", ()=>{
     addToy = !addToy
     if (addToy) {
       toyForm.style.display = 'block'
+      document.querySelector(".add-toy-form").addEventListener("submit", (e)=> {
+        e.preventDefault();
+        addToys(e);
+      } )
     } else {
       toyForm.style.display = 'none'
     }
   })
   displayToys();
-  addToys();
-  toyLikes();
+  
+  
 })
 
 
@@ -29,6 +33,7 @@ function displayToys(){
         
       })
   })
+  
 }
 
 function renderToy(toy){
@@ -39,13 +44,14 @@ function renderToy(toy){
   <p> Likes: ${toy.likes}</p>
   <button class="like-btn" type="button"> Like! </button>
   </div>`
+
+  toyLikes();
 }
 
-function addToys(){
-  let form = document.querySelector(".add-toy-form");
+function addToys(e){
   const toy = {
-    name: form.name.value,
-    image: form.image.value ,
+    name: e.target.name.value,
+    image: e.target.image.value ,
     likes: 0
   }
 
@@ -54,11 +60,11 @@ function addToys(){
     e.preventDefault();
     fetch("http://localhost:3000/toys", {
       method: 'POST',
-      body: JSON.stringify(toy),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
-      }
+      },
+      body: JSON.stringify(toy)
     })
     .then(response => {
       return response.json(); 
@@ -73,10 +79,18 @@ function addToys(){
 
 function toyLikes(){
   let toyCards = document.querySelectorAll(".card");
-     toyCards.forEach( toy => {
-       let likes = toy.querySelector(".like-btn")
-       likes.addEventListener("click", function(e){
-         console.log("e", e)
-     })
+    toyCards.forEach( toy => {
+      let toLike = toy.querySelector(".like-btn")
+      toLike.addEventListener("click", (e) => {
+        //e.preventDefault();
+        let newnum = toy.querySelector('p')
+        let total = toy.querySelector('p').innerText.split(" ")[1]
+        let integer =  parseInt(total, 10);
+        var newtotal = 0;
+        newtotal += (integer + 1) ;
+        newnum.innerHTML = `Likes: ${newtotal}`
+        //console.log(newtotal)
+    })
+    
   })
 }
